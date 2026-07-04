@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Tot Messenger</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+    transition: background 0.3s ease;
+  }
+
+  body.dark {
+    background: #0e1621;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+  }
+
+  .login-card {
+    background: transparent;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  /* ===== هدر با لوگو ===== */
+  .login-header {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .logo-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0084ff, #00bfff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 132, 255, 0.25);
+    transition: all 0.3s ease;
+  }
+
+  body.dark .logo-circle {
+    box-shadow: 0 4px 20px rgba(0, 132, 255, 0.15);
+  }
+
+  .logo-circle span {
+    font-size: 36px;
+    color: white;
+  }
+
+  .login-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-top: 4px;
+  }
+
+  body.dark .login-title {
+    color: #ffffff;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+    color: #8d8e91;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  body.dark .login-subtitle {
+    color: #6d6f72;
+  }
+
+  /* ===== فرم ===== */
+  .login-form {
+    margin-top: 32px;
+  }
+
+  .input-group {
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 16px 18px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 14px;
+    font-size: 16px;
+    background: #f5f5f5;
+    transition: all 0.25s ease;
+    outline: none;
+    text-align: right;
+    font-family: inherit;
+    color: #1a1a1a;
+  }
+
+  body.dark .input-group input {
+    border-color: #2a3a4a;
+    background: #17212b;
+    color: #ffffff;
+  }
+
+  .input-group input:focus {
+    border-color: #0084ff;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.1);
+  }
+
+  body.dark .input-group input:focus {
+    background: #1f2c3c;
+    border-color: #5da8e8;
+    box-shadow: 0 0 0 3px rgba(93, 168, 232, 0.15);
+  }
+
+  .input-group input::placeholder {
+    color: #aaa;
+    font-size: 14px;
+  }
+
+  body.dark .input-group input::placeholder {
+    color: #6d6f72;
+  }
+
+  /* ===== دکمه ورود ===== */
+  .login-btn {
+    width: 100%;
+    padding: 16px;
+    background: #0084ff;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-btn:hover {
+    background: #0070e0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
+  }
+
+  .login-btn:active {
+    transform: scale(0.97);
+    box-shadow: none;
+  }
+
+  body.dark .login-btn {
+    background: #2b5278;
+  }
+
+  body.dark .login-btn:hover {
+    background: #3a6a94;
+    box-shadow: 0 4px 15px rgba(43, 82, 120, 0.3);
+  }
+
+  /* ===== لودینگ ===== */
+  .login-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  .login-btn .spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+  }
+
+  .login-btn.loading .spinner {
+    display: block;
+  }
+
+  .login-btn.loading .btn-text {
+    display: none;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== خطا ===== */
+  .error-message {
+    background: rgba(229, 57, 53, 0.08);
+    color: #e53935;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    margin-top: 14px;
+    text-align: center;
+    display: none;
+    border: 1px solid rgba(229, 57, 53, 0.15);
+  }
+
+  .error-message.show {
+    display: block;
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+
+  /* ===== لینک فراموشی ===== */
+  .forgot-link {
+    display: block;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #0084ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .forgot-link:hover {
+    color: #0070e0;
+  }
+
+  body.dark .forgot-link {
+    color: #5da8e8;
+  }
+
+  body.dark .forgot-link:hover {
+    color: #7ab8f0;
+  }
+
+  /* ===== فوتر ساده ===== */
+  .footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #e8e8e8;
+  }
+
+  body.dark .footer {
+    border-top: 1px solid #242f3d;
+  }
+
+  .footer-note {
+    font-size: 11px;
+    color: #8d8e91;
+  }
+
+  body.dark .footer-note {
+    color: #6d6f72;
+  }
+
+  /* ===== دکمه تم (چرخ‌دنده بالای صفحه) ===== */
+  .theme-toggle-float {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.04);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  body.dark .theme-toggle-float {
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .theme-toggle-float:hover {
+    transform: scale(1.05);
+    background: rgba(0,0,0,0.08);
+  }
+
+  body.dark .theme-toggle-float:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .theme-toggle-float:active {
+    transform: scale(0.92);
+  }
+
+  /* ===== ریسپانسیو ===== */
+  @media (max-width: 420px) {
+    .login-container {
+      padding: 12px;
+    }
+    .logo-circle {
+      width: 70px;
+      height: 70px;
+    }
+    .logo-circle span {
+      font-size: 30px;
+    }
+    .login-title {
+      font-size: 22px;
+    }
+    .input-group input {
+      padding: 14px 16px;
+      font-size: 15px;
+    }
+    .login-btn {
+      padding: 14px;
+      font-size: 15px;
+    }
+    .theme-toggle-float {
+      width: 38px;
+      height: 38px;
+      font-size: 17px;
+      top: 12px;
+      left: 12px;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 10px;
+  }
+  body.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== دکمه تم (چرخ‌دنده) ===== -->
+<button class="theme-toggle-float" id="themeToggle" title="Dark/Light">🌙</button>
+
+<div class="login-container">
+  <div class="login-card">
+
+    <!-- ===== هدر ===== -->
+    <div class="login-header">
+      <div class="logo-wrapper">
+        <div class="logo-circle">
+          <span>💬</span>
+        </div>
+      </div>
+      <h1 class="login-title">Tot</h1>
+      <p class="login-subtitle">Sign in to your account</p>
+    </div>
+
+    <!-- ===== فرم ===== -->
+    <div class="login-form">
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" autocomplete="off" />
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" />
+      </div>
+
+      <button class="login-btn" id="loginBtn">
+        <span class="btn-text">Sign In</span>
+        <div class="spinner"></div>
+      </button>
+
+      <a href="#" class="forgot-link" onclick="event.preventDefault(); showError('Contact support to reset password')">Forgot password?</a>
+
+      <div id="errorMsg" class="error-message"></div>
+    </div>
+
+    <!-- ===== فوتر ساده ===== -->
+    <div class="footer">
+      <div class="footer-note">🔒 Your messages are encrypted</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================================
+// لاگین با سیستم Session - کاملاً امن
+// ============================================================
+
+// ========== DOM ELEMENTS ==========
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const loginBtn = document.getElementById('loginBtn');
+const errorMsg = document.getElementById('errorMsg');
+const themeToggle = document.getElementById('themeToggle');
+
+// ========== THEME TOGGLE ==========
+function applyTheme() {
+  const isDark = localStorage.getItem('theme') === 'dark';
+  if (isDark) {
+    document.body.classList.add('dark');
+    themeToggle.textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark');
+    themeToggle.textContent = '🌙';
+  }
+}
+
+function toggleTheme() {
+  if (document.body.classList.contains('dark')) {
+    localStorage.setItem('theme', 'light');
+  } else {
+    localStorage.setItem('theme', 'dark');
+  }
+  applyTheme();
+}
+
+themeToggle.addEventListener('click', toggleTheme);
+applyTheme();
+
+// ========== ERROR HANDLING ==========
+function showError(message) {
+  errorMsg.textContent = message;
+  errorMsg.classList.add('show');
+  const card = document.querySelector('.login-card');
+  card.style.animation = 'none';
+  setTimeout(() => {
+    card.style.animation = 'shake 0.4s ease';
+  }, 10);
+}
+
+function hideError() {
+  errorMsg.classList.remove('show');
+}
+
+// ========== LOGIN FUNCTION (با Session) ==========
+function login() {
+  hideError();
+  
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
+  
+  if (!username || !password) {
+    showError('Please enter username and password');
+    return;
+  }
+  
+  // نمایش لودینگ
+  loginBtn.classList.add('loading');
+  
+  // ارسال به سرور با فرم
+  const formData = new FormData();
+  formData.append('username', username);
+  formData.append('password', password);
+  
+  fetch('/login', {
+    method: 'POST',
+    body: formData
+  })
+  .then(function(response) {
+    // اگر ریدایرکت شد، لاگین موفق بوده
+    if (response.redirected) {
+      // کوکی توسط سرور ست شده
+      window.location.href = response.url;
+      return;
+    }
+    
+    // اگر خطا بود
+    loginBtn.classList.remove('loading');
+    return response.text().then(function(html) {
+      if (html.includes('Invalid')) {
+        showError('Invalid username or password');
+        passwordInput.value = '';
+        passwordInput.focus();
+      } else {
+        showError('Login failed. Please try again.');
+      }
+    });
+  })
+  .catch(function() {
+    loginBtn.classList.remove('loading');
+    showError('Network error. Please try again.');
+  });
+}
+
+// ========== بررسی سشن موجود ==========
+function checkSession() {
+  fetch('/api/get_profile')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.success) {
+        // قبلاً لاگین کرده، برو به rooms
+        window.location.href = '/rooms';
+      }
+    })
+    .catch(function() {
+      // خطا، در صفحه لاگین میمونه
+    });
+}
+
+// ========== EVENT LISTENERS ==========
+loginBtn.addEventListener('click', login);
+
+usernameInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    passwordInput.focus();
+  }
+});
+
+passwordInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    login();
+  }
+});
+
+// ========== CHECK EXISTING SESSION ==========
+// قبل از هر چیز، بررسی کن که آیا قبلاً لاگین کرده
+checkSession();
+
+// ========== INIT ==========
+// فوکوس روی فیلد یوزرنیم
+setTimeout(function() {
+  usernameInput.focus();
+}, 100);
+
+// ========== STORAGE LISTENER برای تم ==========
+window.addEventListener('storage', function(e) {
+  if (e.key === 'theme') {
+    applyTheme();
+  }
+});
+</script>
+
+</body>
+</html>

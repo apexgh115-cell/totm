@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Tot - Profile</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #e5ddd5;
+    --header-bg: #0084ff;
+    --header-text: #ffffff;
+    --card-bg: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #707579;
+    --divider: #e0e0e0;
+    --navbar-bg: rgba(255,255,255,0.96);
+    --navbar-active: #0084ff;
+    --navbar-inactive: #8d8e91;
+    --hover-bg: #f5f5f5;
+    --glass-bg: rgba(128,128,128,0.08);
+    --info-box-bg: rgba(128,128,128,0.04);
+    --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    --circle-color: rgba(0,0,0,0.05);
+    --circle-hover: rgba(0,0,0,0.1);
+    --circle-active: rgba(0,0,0,0.15);
+    --center-bg: rgba(128,128,128,0.08);
+    --center-border: rgba(128,128,128,0.15);
+    --icon-color: #000000;
+  }
+
+  .dark-mode {
+    --bg: #0e1621;
+    --header-bg: #1f2c3c;
+    --header-text: #ffffff;
+    --card-bg: #17212b;
+    --text-primary: #ffffff;
+    --text-secondary: #8d8e91;
+    --divider: #242f3d;
+    --navbar-bg: rgba(23,33,43,0.96);
+    --navbar-active: #5da8e8;
+    --navbar-inactive: #6d6f72;
+    --hover-bg: #1f2c3c;
+    --glass-bg: rgba(255,255,255,0.04);
+    --info-box-bg: rgba(255,255,255,0.04);
+    --shadow: 0 2px 10px rgba(0,0,0,0.3);
+    --circle-color: rgba(255,255,255,0.06);
+    --circle-hover: rgba(255,255,255,0.1);
+    --circle-active: rgba(255,255,255,0.15);
+    --center-bg: rgba(255,255,255,0.05);
+    --center-border: rgba(255,255,255,0.08);
+    --icon-color: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
+
+  body {
+    font-family: 'Vazirmatn', 'Arial', sans-serif;
+    background: var(--bg); display: flex; justify-content: center;
+    align-items: center; direction: rtl;
+  }
+
+  .app-container { width: 100%; height: 100%; background: var(--card-bg); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+
+  .content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 80px; }
+
+  /* ===== BADGE STYLES - UFC ===== */
+  .badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 6px;
+    vertical-align: middle;
+    position: relative;
+  }
+
+  .badge-ufc-large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 18px 5px 18px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+    background: #ff0000;
+    box-shadow: 
+        0 4px 16px rgba(255, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.2);
+    transform: perspective(400px) rotateX(2deg);
+    transition: all 0.2s ease;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    user-select: none;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .badge-ufc-large::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 30px 30px 0 0;
+    pointer-events: none;
+  }
+
+  .badge-ufc-large::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 20%;
+    right: 20%;
+    height: 6px;
+    background: rgba(255, 0, 0, 0.2);
+    border-radius: 50%;
+    filter: blur(4px);
+  }
+
+  /* ===== PROFILE ===== */
+  .profile-top { display: flex; flex-direction: column; align-items: center; padding: 30px 20px 10px; gap: 4px; }
+  
+  .avatar-wrapper { position: relative; cursor: pointer; margin-bottom: 8px; }
+  .profile-avatar {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: linear-gradient(135deg, #0084ff, #00bfff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; color: white; font-weight: 700;
+    overflow: hidden; object-fit: cover;
+  }
+  .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  
+  .avatar-edit-icon {
+    position: absolute; bottom: 0; right: 0; width: 32px; height: 32px;
+    border-radius: 50%; background: #0084ff; border: 3px solid var(--card-bg);
+    display: flex; align-items: center; justify-content: center;
+    color: white; cursor: pointer; transition: transform 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .avatar-edit-icon:active { transform: scale(0.9); }
+  .avatar-edit-icon svg { width: 16px; height: 16px; fill: white; }
+
+  .profile-name-large { 
+    font-size: 20px; 
+    font-weight: 700; 
+    color: var(--text-primary); 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  }
+  .online-status { font-size: 13px; color: #0084ff; font-weight: 400; }
+
+  /* ===== سه دکمه شیشه‌ای ===== */
+  .action-btns {
+    display: flex;
+    gap: 14px;
+    padding: 10px 20px 6px;
+    justify-content: center;
+  }
+  .action-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: 1px solid var(--divider);
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    max-width: 120px;
+    min-height: 70px;
+  }
+  .action-btn svg { width: 22px; height: 22px; fill: var(--text-secondary); }
+  .action-btn:active { background: var(--hover-bg); transform: scale(0.96); }
+  .action-btn span { font-size: 11px; }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    margin: 10px 16px 8px; background: var(--info-box-bg);
+    border-radius: 14px; overflow: hidden;
+  }
+  .info-row {
+    display: flex; align-items: center; padding: 13px 16px;
+    cursor: pointer; transition: background 0.15s;
+    border-bottom: 1px solid var(--divider); gap: 12px;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-row:active { background: var(--hover-bg); }
+  .info-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; background: var(--glass-bg);
+  }
+  .info-icon svg { width: 16px; height: 16px; fill: var(--text-secondary); }
+  .info-text { flex: 1; min-width: 0; }
+  .info-label { font-size: 11px; color: #0084ff; margin-bottom: 2px; }
+  .info-value { font-size: 15px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ===== GIFT BOX ===== */
+  .gift-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .gift-box {
+    background: var(--navbar-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+    border: 0.5px solid rgba(255,255,255,0.2);
+    width: auto;
+    min-width: 140px;
+    max-width: 70%;
+  }
+  .dark-mode .gift-box {
+    border: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .gift-btn {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--text-secondary);
+  }
+  .gift-btn:active { transform: scale(0.95); }
+  .gift-btn.marks.active, .gift-btn.gift.active {
+    background: #0084ff;
+    color: white;
+  }
+  .dark-mode .gift-btn.marks.active, .dark-mode .gift-btn.gift.active {
+    background: #5da8e8;
+    color: white;
+  }
+
+  /* ===== POPUPS ===== */
+  .action-popup-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4); z-index: 1150;
+    display: none; align-items: center; justify-content: center;
+  }
+  .action-popup-overlay.active { display: flex; }
+  .action-popup {
+    background: var(--card-bg); border-radius: 14px; width: 200px;
+    overflow: hidden; animation: scaleIn 0.15s ease; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  .action-popup-item {
+    padding: 13px 20px; cursor: pointer; font-size: 14px; font-weight: 500;
+    color: var(--text-primary); text-align: center; transition: background 0.15s;
+  }
+  .action-popup-item:first-child { border-bottom: 1px solid var(--divider); }
+  .action-popup-item:active { background: var(--hover-bg); }
+  .action-popup-item.edit { color: #0084ff; }
+
+  .edit-page-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--card-bg); z-index: 1200; display: none; flex-direction: column;
+  }
+  .edit-page-overlay.active { display: flex; }
+  .edit-page-header {
+    display: flex; align-items: center; padding: 14px 20px;
+    min-height: 56px; gap: 12px; background: var(--header-bg); color: white;
+  }
+  .edit-page-header .back-btn {
+    background: none; border: none; color: white; font-size: 24px;
+    cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; border-radius: 50%;
+  }
+  .edit-page-body { flex: 1; overflow-y: auto; padding: 16px; }
+  .edit-section { margin-bottom: 16px; }
+  .edit-section-title { font-size: 12px; font-weight: 600; color: #0084ff; margin-bottom: 8px; padding: 0 4px; }
+  .edit-field { background: var(--info-box-bg); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; }
+  .edit-field-label { font-size: 11px; color: #0084ff; margin-bottom: 4px; }
+  .edit-field-input {
+    width: 100%; border: none; background: transparent; color: var(--text-primary);
+    font-family: 'Vazirmatn', 'Arial', sans-serif; font-size: 15px; outline: none; text-align: right;
+  }
+  .account-item {
+    display: flex; align-items: center; padding: 12px; gap: 12px;
+    background: var(--info-box-bg); border-radius: 12px; margin-bottom: 6px;
+  }
+  .account-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--header-bg); display: flex; align-items: center;
+    justify-content: center; color: white; font-weight: 700; font-size: 18px; flex-shrink: 0;
+  }
+  .account-name { font-size: 15px; color: var(--text-primary); }
+  .logout-section { margin-top: 20px; }
+  .logout-btn-full {
+    width: 100%; padding: 14px; border: 1px solid rgba(229,57,53,0.3);
+    border-radius: 12px; background: transparent; color: #e53935;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: flex-start; gap: 8px;
+    font-family: 'Vazirmatn', 'Arial', sans-serif; direction: rtl;
+  }
+  .logout-btn-full svg { width: 18px; height: 18px; fill: #e53935; flex-shrink: 0; }
+  .logout-btn-full:active { background: var(--hover-bg); transform: scale(0.98); }
+
+  .gallery-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: #000; z-index: 1100; display: none; flex-direction: column;
+  }
+  .gallery-overlay.active { display: flex; }
+  .gallery-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px; min-height: 56px; color: white;
+    position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  }
+  .gallery-back {
+    background: none; border: none; color: white; font-size: 24px;
+    cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; border-radius: 50%;
+  }
+  .gallery-more-wrapper { position: relative; }
+  .gallery-more {
+    background: none; border: none; color: white; cursor: pointer;
+    width: 36px; height: 36px; display: flex; align-items: center;
+    justify-content: center; border-radius: 50%; flex-direction: column; gap: 2px; padding: 0;
+  }
+  .gallery-more span { width: 4px; height: 4px; background: white; border-radius: 50%; display: block; }
+  .gallery-counter {
+    position: absolute; top: 70px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.5); color: white; padding: 6px 16px;
+    border-radius: 20px; font-size: 14px; font-weight: 600; z-index: 5;
+  }
+  .gallery-menu {
+    position: absolute; top: 48px; right: 0; background: rgba(40,40,40,0.95);
+    border-radius: 10px; padding: 2px 0; z-index: 30; display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4); min-width: 140px;
+  }
+  .gallery-menu.active { display: block; }
+  .gallery-menu-item {
+    padding: 10px 16px; cursor: pointer; font-size: 13px; color: #ddd;
+    transition: background 0.15s; text-align: right;
+  }
+  .gallery-menu-item.danger { color: #ff5252; }
+  .gallery-container { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .gallery-slides { display: flex; transition: transform 0.35s ease; height: 100%; width: 100%; }
+  .gallery-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .gallery-avatar {
+    width: 280px; height: 280px; border-radius: 50%; object-fit: cover;
+    background: linear-gradient(135deg, #0084ff, #00bfff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 100px; color: white; font-weight: 700; box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+
+  /* ========== BOTTOM NAV ========== */
+  .bottom-nav-floating {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 200px;
+    max-width: 85%;
+    background: var(--navbar-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    box-shadow: var(--shadow);
+    z-index: 200;
+    border: 0.5px solid rgba(255,255,255,0.2);
+  }
+  .dark-mode .bottom-nav-floating { border: 0.5px solid rgba(255,255,255,0.08); }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--navbar-inactive);
+    text-decoration: none;
+    border-radius: 30px;
+    background: transparent;
+  }
+  .nav-item.active { color: var(--navbar-active); }
+  .nav-item:active { transform: scale(0.92); background: var(--glass-bg); }
+  .nav-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+  .nav-icon svg { width: 22px; height: 22px; }
+  .icon-outline { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-filled { fill: currentColor; stroke: none; }
+  .nav-label { font-size: 10px; font-weight: 500; text-align: center; opacity: 0.8; }
+
+  @media (max-width: 480px) {
+    .bottom-nav-floating { gap: 8px; padding: 6px 12px; min-width: 180px; }
+    .nav-item { padding: 6px 10px; }
+    .nav-icon svg { width: 20px; height: 20px; }
+    .nav-label { font-size: 9px; }
+    .gift-box { gap: 8px; padding: 4px 10px; min-width: 120px; }
+    .gift-btn { padding: 5px 14px; font-size: 12px; }
+    .action-btn { max-width: 105px; min-height: 60px; padding: 10px 6px; }
+    .action-btn svg { width: 20px; height: 20px; }
+    .action-btns { gap: 10px; padding: 10px 14px 6px; }
+    .badge-ufc-large { font-size: 12px; padding: 3px 14px 4px 14px; }
+  }
+
+  .content::-webkit-scrollbar, .edit-page-body::-webkit-scrollbar { width: 4px; }
+  .content::-webkit-scrollbar-thumb, .edit-page-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+  input[type="file"] { display: none; }
+  
+  .toast {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.8); color: white; padding: 10px 24px;
+    border-radius: 12px; font-size: 14px; z-index: 9999;
+    animation: fadeInUp 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <div class="content">
+
+    <!-- ===== PROFILE ===== -->
+    <div class="profile-top">
+      <div class="avatar-wrapper" onclick="openGalleryIfHasPhotos()">
+        <div class="profile-avatar" id="profileAvatar">
+          <span id="avatarText">U</span>
+        </div>
+        <div class="avatar-edit-icon" onclick="event.stopPropagation(); document.getElementById('avatarInput').click()">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="profile-name-large" id="profileNameDisplay">User</div>
+      <div class="online-status" id="onlineStatus">online</div>
+    </div>
+
+    <!-- ===== سه دکمه ===== -->
+    <div class="action-btns">
+      <button class="action-btn" onclick="document.getElementById('avatarInput').click()">
+        <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+        <span>Photo</span>
+      </button>
+      <button class="action-btn" onclick="openEditPage()">
+        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <span>Edit</span>
+      </button>
+      <button class="action-btn" onclick="location.replace('/settings')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        <span>Settings</span>
+      </button>
+    </div>
+
+    <!-- ===== INFO BOX ===== -->
+    <div class="info-box">
+      <div class="info-row" onclick="showActionPopup('name')">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        <div class="info-text"><div class="info-label">Name</div><div class="info-value" id="infoName">User</div></div>
+      </div>
+      <div class="info-row" onclick="showActionPopup('bio')">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+        <div class="info-text"><div class="info-label">Bio</div><div class="info-value" id="infoBio" style="color:var(--text-secondary)">No bio</div></div>
+      </div>
+      <div class="info-row" onclick="showActionPopup('id')">
+        <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div class="info-text"><div class="info-label">ID</div><div class="info-value" id="infoId">@user</div></div>
+      </div>
+    </div>
+
+    <!-- ===== GIFT BOX ===== -->
+    <div class="gift-wrapper">
+      <div class="gift-box">
+        <button class="gift-btn marks" id="marksBtn" onclick="setActiveGift('marks')">
+          <span>Marks</span>
+        </button>
+        <button class="gift-btn gift" id="giftBtn" onclick="setActiveGift('gift')">
+          <span>Gift</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== POPUPS ===== -->
+  <div class="action-popup-overlay" id="actionPopupOverlay" onclick="closeActionPopup()">
+    <div class="action-popup">
+      <div class="action-popup-item" onclick="copyField()">Copy</div>
+      <div class="action-popup-item edit" onclick="editFieldFromPopup()">Edit</div>
+    </div>
+  </div>
+
+  <div class="edit-page-overlay" id="editPageOverlay">
+    <div class="edit-page-header">
+      <button class="back-btn" onclick="closeEditPage()">←</button>
+      <span>Edit Profile</span>
+    </div>
+    <div class="edit-page-body">
+      <div class="edit-section">
+        <div class="edit-section-title">Profile Info</div>
+        <div class="edit-field"><div class="edit-field-label">Name</div><input class="edit-field-input" id="editName" /></div>
+        <div class="edit-field"><div class="edit-field-label">ID</div><input class="edit-field-input" id="editId" /></div>
+        <div class="edit-field"><div class="edit-field-label">Bio</div><input class="edit-field-input" id="editBio" maxlength="70" placeholder="Add a bio..." /></div>
+      </div>
+      <div class="edit-section">
+        <div class="edit-section-title">Accounts</div>
+        <div class="account-item">
+          <div class="account-avatar" id="editAccountAvatar">U</div>
+          <div class="account-name" id="editAccountName">User</div>
+        </div>
+      </div>
+      <div class="logout-section">
+        <button class="logout-btn-full" id="logoutBtnEdit" onclick="confirmLogout()">
+          <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-overlay" id="galleryOverlay">
+    <div class="gallery-header">
+      <button class="gallery-back" onclick="closeGallery()">←</button>
+      <div class="gallery-more-wrapper">
+        <button class="gallery-more" onclick="toggleGalleryMenu(event)"><span></span><span></span><span></span></button>
+        <div class="gallery-menu" id="galleryMenu">
+          <div class="gallery-menu-item" onclick="saveCurrentAvatar()">Save to Gallery</div>
+          <div class="gallery-menu-item danger" onclick="deleteCurrentAvatar()">Delete</div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-counter" id="galleryCounter">1 of 1</div>
+    <div class="gallery-container" id="galleryContainer">
+      <div class="gallery-slides" id="gallerySlides"></div>
+    </div>
+  </div>
+
+  <input type="file" id="avatarInput" accept="image/*" />
+
+  <!-- ========== BOTTOM NAV ========== -->
+  <div class="bottom-nav-floating">
+    <div class="nav-item" onclick="location.replace('/rooms')">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <path class="icon-outline" d="M21 15c0-4.97-4.03-9-9-9s-9 4.03-9 9"/>
+          <path class="icon-outline" d="M21 15l-3 3-3-3"/>
+        </svg>
+      </div>
+      <span class="nav-label">Chats</span>
+    </div>
+    <div class="nav-item active" onclick="location.replace('/profile')">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <circle class="icon-filled" cx="12" cy="8" r="4"/>
+          <path class="icon-filled" d="M6 21v-2c0-2.21 2.69-4 6-4s6 1.79 6 4v2"/>
+        </svg>
+      </div>
+      <span class="nav-label">Profile</span>
+    </div>
+    <div class="nav-item" onclick="location.replace('/settings')">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <circle class="icon-outline" cx="12" cy="12" r="3"/>
+          <path class="icon-outline" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </div>
+      <span class="nav-label">Settings</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script>
+// ============================================================
+// پروفایل با سیستم Session + Real-time Sync + Badge + آپلود آدرس
+// ============================================================
+
+// ====== متغیرها ======
+var currentUsername = '';
+var currentUserId = '';
+var currentDisplayName = '';
+var currentBio = '';
+var currentAvatar = '';
+var currentBadge = '';
+var currentBadgeColor = '';
+
+var savedName = '';
+var savedId = '';
+var savedBio = '';
+var avatarList = [];
+var currentGalleryIndex = 0;
+var activeField = '';
+var socket = null;
+
+// ============================================================
+// Socket.IO - برای همگام‌سازی Real-time
+// ============================================================
+
+function initSocket() {
+    socket = io();
+    
+    socket.on('connect', function() {
+        console.log('✅ Socket connected');
+    });
+    
+    socket.on('user_profile_updated', function(data) {
+        if (data.user_id === currentUserId) {
+            return;
+        }
+        
+        if (data.display_name) {
+            localStorage.setItem('profile_name_' + data.username, data.display_name);
+        }
+        if (data.bio !== undefined) {
+            localStorage.setItem('profile_bio_' + data.username, data.bio);
+        }
+        if (data.avatar) {
+            var avatars = JSON.parse(localStorage.getItem('profile_avatars_' + data.username) || '[]');
+            if (!avatars.includes(data.avatar)) {
+                avatars.unshift(data.avatar);
+                localStorage.setItem('profile_avatars_' + data.username, JSON.stringify(avatars));
+            }
+        }
+    });
+    
+    socket.on('user_badge_updated', function(data) {
+        if (data.username === currentUsername) {
+            currentBadge = data.badge;
+            currentBadgeColor = data.badge_color;
+            refreshUI();
+        }
+    });
+}
+
+// ============================================================
+// دریافت اطلاعات از Session
+// ============================================================
+
+function getSessionUser() {
+  fetch('/api/get_profile')
+    .then(function(response) {
+      if (!response.ok) throw new Error('Network error');
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.success) {
+        currentUsername = data.username;
+        currentUserId = data.user_id;
+        currentDisplayName = data.display_name;
+        currentBio = data.bio || '';
+        currentAvatar = data.avatar || '';
+        currentBadge = data.badge || '';
+        currentBadgeColor = data.badge_color || '';
+        
+        localStorage.setItem('tot_username', currentUsername);
+        localStorage.setItem('tot_user_id', currentUserId);
+        localStorage.setItem('tot_display_name', currentDisplayName);
+        localStorage.setItem('profile_badge_' + currentUsername, currentBadge);
+        localStorage.setItem('profile_badge_color_' + currentUsername, currentBadgeColor);
+        
+        initSocket();
+        loadProfileData();
+      } else {
+        window.location.href = '/login';
+      }
+    })
+    .catch(function() {
+      window.location.href = '/login';
+    });
+}
+
+// ============================================================
+// بارگذاری اطلاعات پروفایل
+// ============================================================
+
+function loadProfileData() {
+  savedName = localStorage.getItem('profile_name_' + currentUsername) || currentDisplayName || currentUsername;
+  savedId = localStorage.getItem('profile_id_' + currentUsername) || currentUsername.toLowerCase().replace(/\s/g,'');
+  savedBio = localStorage.getItem('profile_bio_' + currentUsername) || currentBio || '';
+  avatarList = JSON.parse(localStorage.getItem('profile_avatars_' + currentUsername) || '[]');
+  currentBadge = localStorage.getItem('profile_badge_' + currentUsername) || '';
+  currentBadgeColor = localStorage.getItem('profile_badge_color_' + currentUsername) || '';
+  
+  if (currentAvatar && avatarList.length === 0 && currentAvatar.startsWith('/uploads/')) {
+    avatarList.push(currentAvatar);
+    localStorage.setItem('profile_avatars_' + currentUsername, JSON.stringify(avatarList));
+  }
+  
+  refreshUI();
+}
+
+// ============================================================
+// REFRESH UI (با پشتیبانی از آدرس فایل)
+// ============================================================
+
+function refreshUI(){
+  var avatarEl = document.getElementById('profileAvatar');
+  var avatarText = document.getElementById('avatarText');
+  
+  // ====== نمایش آواتار از آدرس ======
+  if (avatarList.length > 0 && avatarList[0] && avatarList[0].startsWith('/uploads/')) {
+    avatarEl.innerHTML = '<img src="' + avatarList[0] + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />';
+  } else if (avatarList.length > 0 && avatarList[0] && avatarList[0].startsWith('data:image')) {
+    // پشتیبانی از Base64 هم (برای سازگاری)
+    avatarEl.innerHTML = '<img src="' + avatarList[0] + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />';
+  } else {
+    avatarEl.innerHTML = '<span id="avatarText">' + savedName.charAt(0).toUpperCase() + '</span>';
+  }
+  
+  // ====== نام + Badge ======
+  var nameDisplay = document.getElementById('profileNameDisplay');
+  if (currentBadge && currentBadge !== '') {
+    nameDisplay.innerHTML = savedName + ' <span class="badge-wrapper"><span class="badge-ufc-large" style="background:' + (currentBadgeColor || '#ff0000') + ';">' + currentBadge + '</span></span>';
+  } else {
+    nameDisplay.textContent = savedName;
+  }
+  
+  document.getElementById('infoName').textContent = savedName;
+  document.getElementById('infoId').textContent = '@'+savedId;
+  document.getElementById('infoBio').textContent = savedBio || 'No bio';
+  document.getElementById('onlineStatus').textContent = 'online';
+  
+  localStorage.setItem('profile_name', savedName);
+  localStorage.setItem('profile_id', savedId);
+  localStorage.setItem('profile_bio', savedBio);
+  if(avatarList.length > 0) {
+    localStorage.setItem('profile_avatar', avatarList[0]);
+  }
+  
+  syncWithServer();
+}
+
+// ============================================================
+// آپلود آواتار با روش آدرس فایل (روش ۲)
+// ============================================================
+
+async function uploadAvatar(file) {
+    var formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+        var response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+        
+        var data = await response.json();
+        
+        if (data.ok) {
+            // آدرس عکس رو ذخیره کن (نه Base64)
+            avatarList.unshift(data.url);
+            saveAll();
+            refreshUI();
+            showToast('✅ Avatar updated!');
+            return true;
+        } else {
+            showToast('❌ Upload failed: ' + data.error);
+            return false;
+        }
+    } catch (error) {
+        console.error('Upload error:', error);
+        showToast('❌ Network error');
+        return false;
+    }
+}
+
+// ============================================================
+// رویداد آپلود عکس (روش ۲)
+// ============================================================
+
+document.getElementById('avatarInput').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    
+    // بررسی حجم فایل (حداکثر 5 مگابایت)
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('❌ File too large (max 5MB)');
+        this.value = '';
+        return;
+    }
+    
+    // بررسی نوع فایل
+    if (!file.type.startsWith('image/')) {
+        showToast('❌ Please select an image file');
+        this.value = '';
+        return;
+    }
+    
+    uploadAvatar(file);
+    this.value = '';
+});
+
+// ============================================================
+// همگام‌سازی با سرور
+// ============================================================
+
+function syncWithServer() {
+  fetch('/api/update_profile', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      display_name: savedName,
+      bio: savedBio,
+      avatar: avatarList.length > 0 ? avatarList[0] : ''
+    })
+  })
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    if (data.success) {
+      console.log('✅ Profile synced with server');
+    }
+  })
+  .catch(function(err) {
+    console.error('Error syncing profile to server:', err);
+  });
+  
+  if (socket) {
+    socket.emit('profile_update', {
+      display_name: savedName,
+      bio: savedBio,
+      avatar: avatarList.length > 0 ? avatarList[0] : ''
+    });
+  }
+}
+
+// ============================================================
+// SAVE ALL
+// ============================================================
+
+function saveAll(){
+  localStorage.setItem('profile_name_' + currentUsername, savedName);
+  localStorage.setItem('profile_id_' + currentUsername, savedId);
+  localStorage.setItem('profile_bio_' + currentUsername, savedBio);
+  localStorage.setItem('profile_avatars_' + currentUsername, JSON.stringify(avatarList));
+  localStorage.setItem('profile_badge_' + currentUsername, currentBadge);
+  localStorage.setItem('profile_badge_color_' + currentUsername, currentBadgeColor);
+  
+  localStorage.setItem('profile_name', savedName);
+  localStorage.setItem('profile_id', savedId);
+  localStorage.setItem('profile_bio', savedBio);
+  if(avatarList.length > 0) {
+    localStorage.setItem('profile_avatar', avatarList[0]);
+  }
+  
+  syncWithServer();
+  refreshUI();
+  showToast('✅ Profile updated successfully!');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+
+function showToast(message) {
+  var toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 2000);
+}
+
+// ============================================================
+// GIFT BUTTONS
+// ============================================================
+
+function setActiveGift(type) {
+  var marksBtn = document.getElementById('marksBtn');
+  var giftBtn = document.getElementById('giftBtn');
+  if(type === 'marks') {
+    marksBtn.classList.add('active');
+    giftBtn.classList.remove('active');
+  } else {
+    giftBtn.classList.add('active');
+    marksBtn.classList.remove('active');
+  }
+}
+
+// ============================================================
+// ACTION POPUP
+// ============================================================
+
+function showActionPopup(field){
+  activeField = field;
+  document.getElementById('actionPopupOverlay').classList.add('active');
+}
+
+function closeActionPopup(){
+  document.getElementById('actionPopupOverlay').classList.remove('active');
+}
+
+function copyField(){
+  var text = activeField==='name' ? savedName : activeField==='id' ? '@'+savedId : savedBio||'';
+  navigator.clipboard.writeText(text).then(function(){
+    closeActionPopup();
+    showToast('✅ Copied to clipboard!');
+  });
+}
+
+function editFieldFromPopup(){
+  closeActionPopup();
+  openEditPage();
+}
+
+// ============================================================
+// EDIT PAGE
+// ============================================================
+
+function openEditPage(){
+  document.getElementById('editName').value = savedName;
+  document.getElementById('editId').value = savedId;
+  document.getElementById('editBio').value = savedBio;
+  document.getElementById('editAccountName').textContent = savedName;
+  document.getElementById('editAccountAvatar').textContent = savedName.charAt(0).toUpperCase();
+  document.getElementById('editPageOverlay').classList.add('active');
+}
+
+function closeEditPage(){
+  var newName = document.getElementById('editName').value.trim();
+  var newId = document.getElementById('editId').value.trim();
+  var newBio = document.getElementById('editBio').value.trim();
+  if(newName) savedName = newName;
+  if(newId) savedId = newId;
+  savedBio = newBio;
+  saveAll();
+  refreshUI();
+  document.getElementById('editPageOverlay').classList.remove('active');
+  showToast('✅ Profile saved!');
+}
+
+// ============================================================
+// LOGOUT
+// ============================================================
+
+function confirmLogout(){
+  if(confirm('Are you sure you want to log out?')){
+    if (socket) {
+      socket.disconnect();
+    }
+    
+    localStorage.removeItem('tot_username');
+    localStorage.removeItem('tot_logged');
+    localStorage.removeItem('tot_user_id');
+    localStorage.removeItem('tot_display_name');
+    localStorage.removeItem('profile_name');
+    localStorage.removeItem('profile_id');
+    localStorage.removeItem('profile_bio');
+    localStorage.removeItem('profile_avatar');
+    localStorage.removeItem('profile_name_' + currentUsername);
+    localStorage.removeItem('profile_id_' + currentUsername);
+    localStorage.removeItem('profile_bio_' + currentUsername);
+    localStorage.removeItem('profile_avatars_' + currentUsername);
+    localStorage.removeItem('profile_badge_' + currentUsername);
+    localStorage.removeItem('profile_badge_color_' + currentUsername);
+    
+    sessionStorage.clear();
+    window.location.replace('/login');
+  }
+}
+
+// ============================================================
+// GALLERY
+// ============================================================
+
+function openGalleryIfHasPhotos(){
+  if(avatarList.length === 0) return;
+  openGallery(0);
+}
+
+function renderGallery(){
+  var s = document.getElementById('gallerySlides');
+  s.innerHTML = '';
+  avatarList.forEach(function(src){
+    var d = document.createElement('div');
+    d.className = 'gallery-slide';
+    d.innerHTML = '<img class="gallery-avatar" src="'+src+'" />';
+    s.appendChild(d);
+  });
+  document.getElementById('galleryCounter').textContent = (currentGalleryIndex+1)+' of '+(avatarList.length||1);
+}
+
+function updateGalleryPosition(){
+  document.getElementById('gallerySlides').style.transform = 'translateX('+(-currentGalleryIndex*100)+'%)';
+  document.getElementById('galleryCounter').textContent = (currentGalleryIndex+1)+' of '+(avatarList.length||1);
+}
+
+var tx = 0;
+document.getElementById('galleryContainer').addEventListener('touchstart', function(e){
+  tx = e.touches[0].clientX;
+}, {passive:true});
+
+document.getElementById('galleryContainer').addEventListener('touchend', function(e){
+  if(avatarList.length <= 1) return;
+  var d = tx - e.changedTouches[0].clientX;
+  if(Math.abs(d) < 40) return;
+  if(d > 0 && currentGalleryIndex < avatarList.length-1){ currentGalleryIndex++; updateGalleryPosition(); }
+  else if(d < 0 && currentGalleryIndex > 0){ currentGalleryIndex--; updateGalleryPosition(); }
+});
+
+function openGallery(i){
+  if(avatarList.length === 0) return;
+  currentGalleryIndex = Math.min(Math.max(i,0), avatarList.length-1);
+  renderGallery();
+  updateGalleryPosition();
+  document.getElementById('galleryOverlay').classList.add('active');
+}
+
+function closeGallery(){
+  document.getElementById('galleryOverlay').classList.remove('active');
+  document.getElementById('galleryMenu').classList.remove('active');
+  refreshUI();
+}
+
+function toggleGalleryMenu(e){
+  e.stopPropagation();
+  document.getElementById('galleryMenu').classList.toggle('active');
+}
+
+document.addEventListener('click', function(e){
+  var m = document.getElementById('galleryMenu');
+  if(m.classList.contains('active') && !e.target.closest('.gallery-more-wrapper')) m.classList.remove('active');
+});
+
+function saveCurrentAvatar(){
+  if(avatarList.length === 0) return;
+  var a = document.createElement('a');
+  a.download = 'profile_'+Date.now()+'.png';
+  a.href = avatarList[currentGalleryIndex];
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  document.getElementById('galleryMenu').classList.remove('active');
+  showToast('✅ Avatar saved to gallery!');
+}
+
+function deleteCurrentAvatar(){
+  if(avatarList.length === 0) return;
+  avatarList.splice(currentGalleryIndex, 1);
+  saveAll();
+  document.getElementById('galleryMenu').classList.remove('active');
+  if(avatarList.length === 0){ closeGallery(); refreshUI(); return; }
+  if(currentGalleryIndex >= avatarList.length) currentGalleryIndex = avatarList.length-1;
+  renderGallery();
+  updateGalleryPosition();
+  refreshUI();
+  showToast('🗑️ Avatar deleted!');
+}
+
+// ============================================================
+// STORAGE LISTENER
+// ============================================================
+
+window.addEventListener('storage', function(e){
+  var key = e.key;
+  if(key && key.startsWith('profile_')) {
+    if(key === 'profile_name_' + currentUsername || 
+       key === 'profile_id_' + currentUsername || 
+       key === 'profile_bio_' + currentUsername || 
+       key === 'profile_avatars_' + currentUsername ||
+       key === 'profile_badge_' + currentUsername ||
+       key === 'profile_badge_color_' + currentUsername) {
+      savedName = localStorage.getItem('profile_name_' + currentUsername) || currentUsername;
+      savedId = localStorage.getItem('profile_id_' + currentUsername) || currentUsername.toLowerCase().replace(/\s/g,'');
+      savedBio = localStorage.getItem('profile_bio_' + currentUsername) || '';
+      avatarList = JSON.parse(localStorage.getItem('profile_avatars_' + currentUsername) || '[]');
+      currentBadge = localStorage.getItem('profile_badge_' + currentUsername) || '';
+      currentBadgeColor = localStorage.getItem('profile_badge_color_' + currentUsername) || '';
+      refreshUI();
+    }
+  }
+});
+
+// ============================================================
+// اعمال تم
+// ============================================================
+
+(function(){ 
+  if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark-mode'); 
+})();
+
+window.addEventListener('storage', function(e) {
+  if (e.key === 'theme') {
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }
+});
+
+// ============================================================
+// INIT
+// ============================================================
+
+getSessionUser();
+
+var style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>

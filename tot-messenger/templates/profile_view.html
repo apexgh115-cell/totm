@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Tot - My Profile</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #e5ddd5;
+    --header-bg: #1f2c33;
+    --header-text: #ffffff;
+    --card-bg: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #707579;
+    --divider: #e0e0e0;
+    --hover-bg: #f5f5f5;
+    --glass-bg: rgba(128,128,128,0.08);
+    --info-box-bg: rgba(128,128,128,0.04);
+    --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    --circle-color: rgba(0,0,0,0.05);
+    --circle-hover: rgba(0,0,0,0.1);
+    --circle-active: rgba(0,0,0,0.15);
+    --icon-color: #000000;
+    --navbar-bg: rgba(255,255,255,0.96);
+    --navbar-active: #0084ff;
+    --navbar-inactive: #8d8e91;
+    --center-bg: rgba(128,128,128,0.08);
+    --center-border: rgba(128,128,128,0.15);
+    --online-color: #4fc3f7;
+  }
+
+  .dark-mode {
+    --bg: #0e1621;
+    --header-bg: #1f2c3c;
+    --header-text: #ffffff;
+    --card-bg: #17212b;
+    --text-primary: #ffffff;
+    --text-secondary: #8d8e91;
+    --divider: #242f3d;
+    --hover-bg: #1f2c3c;
+    --glass-bg: rgba(255,255,255,0.04);
+    --info-box-bg: rgba(255,255,255,0.04);
+    --shadow: 0 2px 10px rgba(0,0,0,0.3);
+    --circle-color: rgba(255,255,255,0.06);
+    --circle-hover: rgba(255,255,255,0.1);
+    --circle-active: rgba(255,255,255,0.15);
+    --icon-color: #ffffff;
+    --navbar-bg: rgba(23,33,43,0.96);
+    --navbar-active: #5da8e8;
+    --navbar-inactive: #6d6f72;
+    --center-bg: rgba(255,255,255,0.05);
+    --center-border: rgba(255,255,255,0.08);
+    --online-color: #4fc3f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
+
+  body {
+    font-family: 'Vazirmatn', 'Arial', sans-serif;
+    background: var(--bg); display: flex; justify-content: center;
+    align-items: center; direction: rtl;
+    transition: background 0.3s ease;
+  }
+
+  .app-container {
+    width: 100%;
+    height: 100%;
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .header {
+    background: var(--bg);
+    padding: 8px 12px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+    z-index: 100;
+    flex-shrink: 0;
+    border-bottom: none;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .circle-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--circle-color);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .circle-btn:hover {
+    background: var(--circle-hover);
+  }
+
+  .circle-btn:active {
+    background: var(--circle-active);
+    transform: scale(0.92);
+  }
+
+  .circle-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--icon-color);
+    stroke: var(--icon-color);
+    stroke-width: 2;
+  }
+
+  .header-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    padding: 4px 14px;
+    background: var(--center-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    margin: 0 6px;
+    border: 1px solid var(--center-border);
+  }
+
+  .header-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .header-right {
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 0 80px;
+  }
+
+  /* ===== PROFILE TOP (وسط چین) ===== */
+  .profile-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px 6px;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: white;
+    font-weight: 700;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+  }
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profile-avatar:active {
+    transform: scale(0.95);
+  }
+
+  /* ===== NAME WITH BADGES (وسط چین) ===== */
+  .profile-name-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    direction: ltr;
+  }
+
+  .profile-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* ===== BADGE STYLES (دقیقا مثل چت 1) ===== */
+  .badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.55em;
+    line-height: 1;
+    position: relative;
+  }
+
+  .badge-ufc {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    border-radius: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: #fff;
+    background: #ff0000;
+    user-select: none;
+    line-height: 1.2;
+    height: 16px;
+    min-width: 28px;
+  }
+
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.6em;
+    width: 16px;
+    height: 16px;
+    background: #1a8cd8;
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: default;
+  }
+  .verified-badge svg {
+    width: 10px;
+    height: 10px;
+    fill: white;
+  }
+
+  .flag-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1px;
+    vertical-align: super;
+    font-size: 0.45em;
+    width: 16px;
+    height: 16px;
+    animation: flagWave 2s ease-in-out infinite;
+    cursor: default;
+    flex-shrink: 0;
+  }
+  .flag-badge svg {
+    width: 100%;
+    height: 100%;
+    border-radius: 1px;
+  }
+
+  @keyframes flagWave {
+    0%, 100% { transform: rotate(-2deg) scale(1); }
+    25% { transform: rotate(2deg) scale(1.02); }
+    50% { transform: rotate(-1deg) scale(0.98); }
+    75% { transform: rotate(3deg) scale(1.01); }
+  }
+
+  .premium-star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.7em;
+    color: #ffd700;
+    animation: premiumGlow 3s ease-in-out infinite;
+    position: relative;
+    width: 18px;
+    height: 18px;
+  }
+  .premium-star::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    left: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,215,0,0.3);
+    animation: ringRotate 3s linear infinite;
+  }
+
+  @keyframes premiumGlow {
+    0%, 100% { text-shadow: 0 0 5px #ffd700, 0 0 10px #ff8c00; }
+    50% { text-shadow: 0 0 15px #ffd700, 0 0 30px #ff8c00; }
+  }
+
+  @keyframes ringRotate {
+    0% { transform: rotate(0deg) scale(1.2); opacity: 1; }
+    50% { transform: rotate(180deg) scale(1.6); opacity: 0.3; }
+    100% { transform: rotate(360deg) scale(1.2); opacity: 1; }
+  }
+
+  .codm-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.5em;
+    font-weight: 900;
+    color: #ffd700;
+    background: #1a1a1a;
+    padding: 0 5px;
+    border-radius: 3px;
+    border: 1px solid #ffd700;
+    animation: codmPulse 0.8s ease-in-out infinite;
+    text-shadow: 0 0 8px rgba(255,215,0,0.5);
+    height: 16px;
+    min-width: 28px;
+    line-height: 1;
+  }
+
+  @keyframes codmPulse {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-2px) scale(1.05); }
+  }
+
+  .messi-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.7em;
+    animation: messiMove 2.5s ease-in-out infinite;
+    position: relative;
+    width: 18px;
+    height: 18px;
+  }
+  .messi-badge::after {
+    content: '⚽';
+    position: absolute;
+    font-size: 0.6em;
+    opacity: 0;
+    animation: ballPass 2.5s ease-in-out infinite;
+  }
+
+  @keyframes messiMove {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(3px) rotate(-5deg); }
+    75% { transform: translateX(-3px) rotate(5deg); }
+  }
+
+  @keyframes ballPass {
+    0%, 80%, 100% { opacity: 0; transform: translateX(-12px); }
+    85% { opacity: 1; transform: translateX(0); }
+    95% { opacity: 1; transform: translateX(12px); }
+  }
+
+  .nba-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.7em;
+    animation: nbaBounce 2s ease-in-out infinite;
+    width: 18px;
+    height: 18px;
+  }
+
+  @keyframes nbaBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(10deg); }
+  }
+
+  .gold-star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.7em;
+    color: #ffd700;
+    animation: goldPulse 1.5s ease-in-out infinite;
+    width: 18px;
+    height: 18px;
+  }
+
+  @keyframes goldPulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 5px #ffd700; }
+    50% { transform: scale(1.2); text-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00; }
+  }
+
+  .cr7-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    vertical-align: super;
+    font-size: 0.5em;
+    font-weight: 800;
+    color: #ff6b00;
+    letter-spacing: 0.5px;
+    animation: cr7Pulse 1.2s ease-in-out infinite;
+    height: 16px;
+    min-width: 24px;
+    line-height: 1;
+  }
+
+  @keyframes cr7Pulse {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-2px) scale(1.08); }
+  }
+
+  /* ===== STATUS ===== */
+  .profile-status {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 2px;
+    text-align: center;
+  }
+  .profile-status.online {
+    color: #4fc3f7;
+  }
+  .profile-status.offline {
+    color: var(--text-secondary);
+  }
+
+  .profile-username {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    text-align: center;
+  }
+
+  /* ===== BADGE GLASS CARDS ===== */
+  .badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 8px 16px 16px;
+  }
+
+  .badge-glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 14px 12px;
+    border: 1px solid var(--divider);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 80px;
+    transition: all 0.3s;
+  }
+
+  .badge-glass-card .badge-icon-big {
+    font-size: 28px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+
+  .badge-glass-card .badge-icon-big svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .badge-glass-card .badge-label-big {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  .badge-glass-card .badge-label-big.ufc {
+    color: #ff0000;
+    background: rgba(255,0,0,0.1);
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+  .badge-glass-card .badge-label-big.codm {
+    color: #ffd700;
+    background: rgba(0,0,0,0.6);
+    padding: 2px 10px;
+    border-radius: 20px;
+    border: 1px solid #ffd700;
+  }
+  .badge-glass-card .badge-label-big.cr7 {
+    color: #ff6b00;
+    font-size: 16px;
+    animation: cr7Pulse 1.2s ease-in-out infinite;
+  }
+
+  .badge-glass-card .badge-icon-big.flag {
+    animation: flagWave 2s ease-in-out infinite;
+  }
+  .badge-glass-card .badge-icon-big.verified {
+    color: #1a8cd8;
+  }
+  .badge-glass-card .badge-icon-big.star {
+    color: #ffd700;
+    animation: goldPulse 1.5s ease-in-out infinite;
+  }
+  .badge-glass-card .badge-icon-big.premium {
+    color: #ffd700;
+    animation: premiumGlow 3s ease-in-out infinite;
+    position: relative;
+  }
+  .badge-glass-card .badge-icon-big.premium::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    left: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,215,0,0.3);
+    animation: ringRotate 3s linear infinite;
+  }
+  .badge-glass-card .badge-icon-big.messi {
+    animation: messiMove 2.5s ease-in-out infinite;
+    position: relative;
+  }
+  .badge-glass-card .badge-icon-big.messi::after {
+    content: '⚽';
+    position: absolute;
+    font-size: 14px;
+    opacity: 0;
+    animation: ballPass 2.5s ease-in-out infinite;
+  }
+  .badge-glass-card .badge-icon-big.nba {
+    animation: nbaBounce 2s ease-in-out infinite;
+  }
+  .badge-glass-card .badge-icon-big.gold {
+    color: #ffd700;
+    animation: goldPulse 1.5s ease-in-out infinite;
+  }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    margin: 0px 16px 16px;
+    background: var(--info-box-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--divider);
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--divider);
+    gap: 14px;
+    transition: background 0.15s;
+  }
+  .info-row:last-child {
+    border-bottom: none;
+  }
+  .info-row:active {
+    background: var(--hover-bg);
+  }
+
+  .info-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--glass-bg);
+  }
+  .info-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--text-secondary);
+  }
+
+  .info-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .info-label {
+    font-size: 11px;
+    color: #0084ff;
+    font-weight: 600;
+    margin-bottom: 1px;
+  }
+  .info-value {
+    font-size: 15px;
+    color: var(--text-primary);
+    word-wrap: break-word;
+    line-height: 1.4;
+  }
+  .info-value.bio {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 6px 16px 10px;
+    justify-content: center;
+  }
+
+  .action-btn {
+    flex: 1;
+    max-width: 160px;
+    padding: 14px 8px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    background: var(--glass-bg);
+    border: 1px solid var(--divider);
+    color: var(--text-primary);
+  }
+  .action-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-secondary);
+  }
+  .action-btn:active {
+    transform: scale(0.95);
+    background: var(--hover-bg);
+  }
+  .action-btn.primary {
+    background: #0084ff;
+    border-color: #0084ff;
+    color: white;
+  }
+  .action-btn.primary svg {
+    fill: white;
+  }
+  .action-btn.primary:active {
+    background: #0066cc;
+  }
+
+  .bottom-nav-floating {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 200px;
+    max-width: 85%;
+    background: var(--navbar-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    box-shadow: var(--shadow);
+    z-index: 200;
+    border: 0.5px solid rgba(255,255,255,0.2);
+  }
+  .dark-mode .bottom-nav-floating {
+    border: 0.5px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--navbar-inactive);
+    text-decoration: none;
+    border-radius: 30px;
+    background: transparent;
+  }
+  .nav-item.active {
+    color: var(--navbar-active);
+  }
+  .nav-item:active {
+    transform: scale(0.92);
+    background: var(--glass-bg);
+  }
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .icon-outline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-filled {
+    fill: currentColor;
+    stroke: none;
+  }
+  .nav-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 480px) {
+    .bottom-nav-floating {
+      gap: 8px;
+      padding: 6px 12px;
+      min-width: 180px;
+    }
+    .nav-item {
+      padding: 6px 10px;
+    }
+    .nav-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    .nav-label {
+      font-size: 9px;
+    }
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      font-size: 40px;
+    }
+    .profile-name {
+      font-size: 20px;
+    }
+    .action-btn {
+      padding: 10px 6px;
+      font-size: 12px;
+    }
+    .action-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+    .info-value {
+      font-size: 14px;
+    }
+    .badges-grid {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      margin: 6px 12px 12px;
+    }
+    .badge-glass-card {
+      padding: 10px 8px;
+      min-height: 65px;
+    }
+    .badge-glass-card .badge-icon-big {
+      font-size: 22px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .content::-webkit-scrollbar {
+    width: 4px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 10px;
+  }
+  .dark-mode .content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .avatar-fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1600;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+  .avatar-fullscreen-overlay.active {
+    display: flex;
+  }
+
+  .avatar-fullscreen-overlay img {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 20px;
+    object-fit: contain;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .avatar-fullscreen-close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .avatar-fullscreen-close:active {
+    transform: scale(0.9);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .dynamic-island {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 9999;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  .dynamic-island.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .island-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0084ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .island-icon svg {
+    width: 13px;
+    height: 13px;
+    fill: white;
+  }
+
+  .error-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+  .error-state svg {
+    width: 60px;
+    height: 60px;
+    fill: var(--text-secondary);
+    opacity: 0.5;
+    margin-bottom: 16px;
+  }
+  
+  .loading-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--divider);
+    border-top-color: #0084ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <div class="dynamic-island" id="dynamicIsland">
+    <div class="island-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
+    <span id="islandText">Copied to clipboard</span>
+  </div>
+
+  <div class="header">
+    <div class="header-left">
+      <button class="circle-btn" onclick="goBack()">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="header-center">
+      <span class="header-title">My Profile</span>
+    </div>
+    <div class="header-right"></div>
+  </div>
+
+  <div class="content" id="content">
+    <!-- Loading -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-spinner"></div>
+      <p>Loading profile...</p>
+    </div>
+
+    <!-- Profile Content -->
+    <div id="profileContent" style="display:none;">
+      <div class="profile-top">
+        <div class="profile-avatar" id="profileAvatar" onclick="openAvatarFullscreen()" style="background: linear-gradient(135deg, #0084ff, #00bfff);">
+          <span id="avatarText">U</span>
+          <img id="avatarImg" style="display:none;" />
+        </div>
+
+        <!-- Name + Badges -->
+        <div class="profile-name-wrapper" id="profileNameWrapper">
+          <span class="profile-name" id="profileName">User</span>
+        </div>
+
+        <div class="profile-username" id="profileUsername">@username</div>
+        <div class="profile-status" id="profileStatus">Online</div>
+      </div>
+
+      <!-- ===== ACTION BUTTON ===== -->
+      <div class="action-buttons">
+        <button class="action-btn primary" onclick="editProfile()" style="max-width:100%;">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <span>Edit Profile</span>
+        </button>
+      </div>
+
+      <!-- ===== BADGE GLASS CARDS ===== -->
+      <div class="badges-grid" id="badgesGrid"></div>
+
+      <!-- ===== INFO BOX ===== -->
+      <div class="info-box">
+        <div class="info-row" onclick="copyInfo('name')">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Name</div>
+            <div class="info-value" id="infoName">User</div>
+          </div>
+        </div>
+
+        <div class="info-row" onclick="copyInfo('username')">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Username</div>
+            <div class="info-value" id="infoUsername">@username</div>
+          </div>
+        </div>
+
+        <div class="info-row" onclick="copyInfo('bio')">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Bio</div>
+            <div class="info-value bio" id="infoBio">No bio</div>
+          </div>
+        </div>
+
+        <div class="info-row" onclick="copyInfo('id')">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <div class="info-content">
+            <div class="info-label">User ID</div>
+            <div class="info-value" id="infoId">---</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-state" id="errorState" style="display:none;">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <p id="errorText">User not found</p>
+    </div>
+  </div>
+
+  <div class="avatar-fullscreen-overlay" id="avatarFullscreenOverlay" onclick="closeAvatarFullscreen()">
+    <button class="avatar-fullscreen-close" onclick="event.stopPropagation(); closeAvatarFullscreen()">✕</button>
+    <img id="avatarFullscreenImg" src="" alt="avatar" />
+  </div>
+
+  <div class="bottom-nav-floating">
+    <div class="nav-item" onclick="goToRooms()">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <path class="icon-outline" d="M21 15c0-4.97-4.03-9-9-9s-9 4.03-9 9"/>
+          <path class="icon-outline" d="M21 15l-3 3-3-3"/>
+        </svg>
+      </div>
+      <span class="nav-label">Chats</span>
+    </div>
+    <div class="nav-item active" onclick="goToProfile()">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <circle class="icon-outline" cx="12" cy="8" r="4"/>
+          <path class="icon-outline" d="M6 21v-2c0-2.21 2.69-4 6-4s6 1.79 6 4v2"/>
+        </svg>
+      </div>
+      <span class="nav-label">Profile</span>
+    </div>
+    <div class="nav-item" onclick="goToSettings()">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <circle class="icon-outline" cx="12" cy="12" r="3"/>
+          <path class="icon-outline" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </div>
+      <span class="nav-label">Settings</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// پروفایل خود کاربر
+// ============================================================
+
+var currentUsername = null;
+var currentUserId = null;
+var currentDisplayName = null;
+var currentBio = null;
+var currentAvatar = null;
+var currentBadge = null;
+var currentBadgeColor = null;
+var islandTimer = null;
+
+var loadingState = document.getElementById('loadingState');
+var profileContent = document.getElementById('profileContent');
+var errorState = document.getElementById('errorState');
+var errorText = document.getElementById('errorText');
+
+// ============================================================
+// دریافت اطلاعات کاربر فعلی از Session
+// ============================================================
+
+function getCurrentUser() {
+  loadingState.style.display = 'block';
+  profileContent.style.display = 'none';
+  errorState.style.display = 'none';
+  
+  fetch('/api/get_profile')
+    .then(function(response) {
+      if (!response.ok) throw new Error('Network error');
+      return response.json();
+    })
+    .then(function(data) {
+      loadingState.style.display = 'none';
+      
+      if (data.success) {
+        currentUsername = data.username;
+        currentUserId = data.user_id;
+        currentDisplayName = data.display_name;
+        currentBio = data.bio || '';
+        currentAvatar = data.avatar || '';
+        currentBadge = data.badge || '';
+        currentBadgeColor = data.badge_color || '';
+        
+        localStorage.setItem('tot_username', currentUsername);
+        localStorage.setItem('tot_user_id', currentUserId);
+        localStorage.setItem('tot_display_name', currentDisplayName);
+        
+        if (currentAvatar) {
+          var avatars = JSON.parse(localStorage.getItem('profile_avatars_' + currentUsername) || '[]');
+          if (!avatars.includes(currentAvatar)) {
+            avatars.unshift(currentAvatar);
+            localStorage.setItem('profile_avatars_' + currentUsername, JSON.stringify(avatars));
+          }
+        }
+        
+        renderProfile();
+        renderBadges();
+        profileContent.style.display = 'block';
+      } else {
+        window.location.href = '/login';
+      }
+    })
+    .catch(function() {
+      loadingState.style.display = 'none';
+      loadFromLocalStorage();
+    });
+}
+
+// ============================================================
+// بارگذاری از localStorage (در صورت عدم دسترسی به سرور)
+// ============================================================
+
+function loadFromLocalStorage() {
+  currentUsername = localStorage.getItem('tot_username') || 'User';
+  currentUserId = localStorage.getItem('tot_user_id') || '---';
+  currentDisplayName = localStorage.getItem('tot_display_name') || currentUsername;
+  currentBio = localStorage.getItem('profile_bio_' + currentUsername) || 'No bio';
+  currentAvatar = localStorage.getItem('profile_avatar_' + currentUsername) || '';
+  
+  renderProfile();
+  renderBadges();
+  profileContent.style.display = 'block';
+}
+
+// ============================================================
+// رندر Badge ها در باکس‌های جداگانه
+// ============================================================
+
+function getFlagSVG() {
+  return `<svg viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;">
+    <rect x="0" y="0" width="150" height="33.3" fill="#239f40"/>
+    <rect x="0" y="33.3" width="150" height="33.4" fill="#ffffff"/>
+    <rect x="0" y="66.7" width="150" height="33.3" fill="#da291c"/>
+    <circle cx="75" cy="50" r="14" fill="#ffd700" stroke="#ff8c00" stroke-width="1.2"/>
+    <g stroke="#ffd700" stroke-width="1.5">
+      <line x1="75" y1="30" x2="75" y2="24"/>
+      <line x1="75" y1="70" x2="75" y2="76"/>
+      <line x1="49" y1="50" x2="43" y2="50"/>
+      <line x1="101" y1="50" x2="107" y2="50"/>
+      <line x1="56" y1="37" x2="52" y2="33"/>
+      <line x1="94" y1="37" x2="98" y2="33"/>
+      <line x1="56" y1="63" x2="52" y2="67"/>
+      <line x1="94" y1="63" x2="98" y2="67"/>
+      <line x1="75" y1="24" x2="75" y2="18"/>
+      <line x1="43" y1="50" x2="37" y2="50"/>
+      <line x1="107" y1="50" x2="113" y2="50"/>
+    </g>
+    <g transform="translate(75,50)">
+      <ellipse cx="0" cy="8" rx="10" ry="6" fill="#e8a317"/>
+      <circle cx="0" cy="-1" r="8" fill="#e8a317"/>
+      <circle cx="0" cy="-1" r="10" fill="none" stroke="#cc7722" stroke-width="2"/>
+      <circle cx="0" cy="-1" r="8.5" fill="none" stroke="#cc7722" stroke-width="1.2"/>
+      <circle cx="0" cy="-1" r="6" fill="#e8a317"/>
+      <ellipse cx="-4.5" cy="-6" rx="1.8" ry="2.5" fill="#cc7722"/>
+      <ellipse cx="4.5" cy="-6" rx="1.8" ry="2.5" fill="#cc7722"/>
+      <circle cx="-2" cy="-3" r="1.2" fill="#1a1a1a"/>
+      <circle cx="2" cy="-3" r="1.2" fill="#1a1a1a"/>
+      <ellipse cx="0" cy="0" rx="1.8" ry="1.2" fill="#cc7722"/>
+      <path d="M-3 3 Q0 5.5 3 3" fill="none" stroke="#cc7722" stroke-width="0.8"/>
+      <path d="M-1.5 3 L-0.5 4.5 L0.5 4.5 L1.5 3" fill="#cc4422"/>
+      <line x1="6" y1="4" x2="13" y2="-4" stroke="#c0c0c0" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="5" y1="3.5" x2="6.5" y2="5" stroke="#8b7355" stroke-width="2" stroke-linecap="round"/>
+      <line x1="3.5" y1="2.5" x2="5" y2="3.5" stroke="#8b7355" stroke-width="1.5"/>
+      <path d="M7.5 3 L13 -4 L12 -5 L6.5 2 Z" fill="#e0e0e0" stroke="#c0c0c0" stroke-width="0.4"/>
+      <path d="M-8 9 Q-12 6 -14 10 Q-15 13 -12 11.5" fill="none" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="-5.5" y1="12" x2="-5.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="5.5" y1="12" x2="5.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="-2.5" y1="12" x2="-2.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="2.5" y1="12" x2="2.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+  </svg>`;
+}
+
+function getVerifiedSVG() {
+  return `<svg viewBox="0 0 24 24" style="width:32px;height:32px;fill:#1a8cd8;">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+  </svg>`;
+}
+
+function getBadgeItems() {
+  var username = currentUsername || '';
+  var badge = currentBadge || '';
+  var badgeColor = currentBadgeColor || '#ff0000';
+  var items = [];
+  
+  if (username === 'Apex') {
+    items.push({ icon: 'verified', label: 'Verified', labelClass: '' });
+    items.push({ icon: 'ufc', label: 'UFC', labelClass: 'ufc' });
+    items.push({ icon: 'flag', label: 'Pahlavi Flag', labelClass: '' });
+  }
+  else if (username === 'patrik') {
+    items.push({ icon: 'premium', label: 'Premium Star', labelClass: '' });
+  }
+  else if (username === 'mz') {
+    items.push({ icon: 'codm', label: 'CODM', labelClass: 'codm' });
+  }
+  else if (username === 'mamad') {
+    items.push({ icon: 'messi', label: 'Messi', labelClass: '' });
+  }
+  else if (username === 'm.r') {
+    items.push({ icon: 'nba', label: 'NBA', labelClass: '' });
+  }
+  else if (username === 'es') {
+    items.push({ icon: 'gold', label: 'Golden Star', labelClass: '' });
+  }
+  else if (username === 'samir') {
+    items.push({ icon: 'cr7', label: 'CR7', labelClass: 'cr7' });
+  }
+  else if (badge && badge !== '') {
+    items.push({ icon: 'custom', label: badge, labelClass: '', customColor: badgeColor });
+  }
+  
+  return items;
+}
+
+function renderBadges() {
+  var grid = document.getElementById('badgesGrid');
+  grid.innerHTML = '';
+  
+  var items = getBadgeItems();
+  
+  if (items.length === 0) {
+    var emptyCard = document.createElement('div');
+    emptyCard.className = 'badge-glass-card';
+    emptyCard.style.gridColumn = '1 / -1';
+    emptyCard.style.minHeight = '50px';
+    emptyCard.style.padding = '20px';
+    emptyCard.innerHTML = `
+      <span style="color:var(--text-secondary);font-size:13px;opacity:0.5;">No badges</span>
+    `;
+    grid.appendChild(emptyCard);
+    return;
+  }
+  
+  items.forEach(function(item) {
+    var card = document.createElement('div');
+    card.className = 'badge-glass-card';
+    
+    var iconHTML = '';
+    var iconClass = '';
+    
+    switch(item.icon) {
+      case 'flag':
+        iconHTML = getFlagSVG();
+        iconClass = 'flag';
+        break;
+      case 'verified':
+        iconHTML = getVerifiedSVG();
+        iconClass = 'verified';
+        break;
+      case 'ufc':
+        iconHTML = '<span style="font-size:24px;font-weight:900;color:#ff0000;">UFC</span>';
+        iconClass = '';
+        break;
+      case 'premium':
+        iconHTML = '<span style="font-size:28px;color:#ffd700;">⭐</span>';
+        iconClass = 'premium';
+        break;
+      case 'codm':
+        iconHTML = '<span style="font-size:18px;font-weight:900;color:#ffd700;background:#1a1a1a;padding:2px 8px;border-radius:4px;border:1px solid #ffd700;">CODM</span>';
+        iconClass = '';
+        break;
+      case 'messi':
+        iconHTML = '<span style="font-size:28px;">⚽</span>';
+        iconClass = 'messi';
+        break;
+      case 'nba':
+        iconHTML = '<span style="font-size:28px;">🏀</span>';
+        iconClass = 'nba';
+        break;
+      case 'gold':
+        iconHTML = '<span style="font-size:28px;color:#ffd700;">⭐</span>';
+        iconClass = 'gold';
+        break;
+      case 'cr7':
+        iconHTML = '<span style="font-size:20px;font-weight:800;color:#ff6b00;">CR7</span>';
+        iconClass = 'cr7';
+        break;
+      case 'custom':
+        iconHTML = `<span class="badge-ufc" style="background:${item.customColor};font-size:12px;padding:2px 10px;">${item.label}</span>`;
+        break;
+      default:
+        iconHTML = '';
+    }
+    
+    var iconWrapper = document.createElement('div');
+    iconWrapper.className = 'badge-icon-big' + (iconClass ? ' ' + iconClass : '');
+    iconWrapper.innerHTML = iconHTML;
+    card.appendChild(iconWrapper);
+    
+    var labelClass = item.labelClass ? ' ' + item.labelClass : '';
+    var label = document.createElement('span');
+    label.className = 'badge-label-big' + labelClass;
+    if (item.icon === 'ufc') label.textContent = 'UFC Badge';
+    else if (item.icon === 'flag') label.textContent = 'Pahlavi Flag';
+    else if (item.icon === 'verified') label.textContent = 'Verified';
+    else label.textContent = item.label;
+    card.appendChild(label);
+    
+    grid.appendChild(card);
+  });
+}
+
+// ============================================================
+// رندر پروفایل
+// ============================================================
+
+function buildNameBadges() {
+  var username = currentUsername || '';
+  var badge = currentBadge || '';
+  var badgeColor = currentBadgeColor || '#ff0000';
+  var html = '';
+  
+  if (username === 'Apex') {
+    html += ` <span class="verified-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>`;
+    html += ` <span class="badge-wrapper"><span class="badge-ufc" style="background:#ff0000;">UFC</span></span>`;
+    html += ` <span class="flag-badge">
+        <svg viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="150" height="33.3" fill="#239f40"/>
+            <rect x="0" y="33.3" width="150" height="33.4" fill="#ffffff"/>
+            <rect x="0" y="66.7" width="150" height="33.3" fill="#da291c"/>
+            <circle cx="75" cy="50" r="14" fill="#ffd700" stroke="#ff8c00" stroke-width="1.2"/>
+            <g stroke="#ffd700" stroke-width="1.5">
+                <line x1="75" y1="30" x2="75" y2="24"/>
+                <line x1="75" y1="70" x2="75" y2="76"/>
+                <line x1="49" y1="50" x2="43" y2="50"/>
+                <line x1="101" y1="50" x2="107" y2="50"/>
+                <line x1="56" y1="37" x2="52" y2="33"/>
+                <line x1="94" y1="37" x2="98" y2="33"/>
+                <line x1="56" y1="63" x2="52" y2="67"/>
+                <line x1="94" y1="63" x2="98" y2="67"/>
+                <line x1="75" y1="24" x2="75" y2="18"/>
+                <line x1="43" y1="50" x2="37" y2="50"/>
+                <line x1="107" y1="50" x2="113" y2="50"/>
+            </g>
+            <g transform="translate(75,50)">
+                <ellipse cx="0" cy="8" rx="10" ry="6" fill="#e8a317"/>
+                <circle cx="0" cy="-1" r="8" fill="#e8a317"/>
+                <circle cx="0" cy="-1" r="10" fill="none" stroke="#cc7722" stroke-width="2"/>
+                <circle cx="0" cy="-1" r="8.5" fill="none" stroke="#cc7722" stroke-width="1.2"/>
+                <circle cx="0" cy="-1" r="6" fill="#e8a317"/>
+                <ellipse cx="-4.5" cy="-6" rx="1.8" ry="2.5" fill="#cc7722"/>
+                <ellipse cx="4.5" cy="-6" rx="1.8" ry="2.5" fill="#cc7722"/>
+                <circle cx="-2" cy="-3" r="1.2" fill="#1a1a1a"/>
+                <circle cx="2" cy="-3" r="1.2" fill="#1a1a1a"/>
+                <ellipse cx="0" cy="0" rx="1.8" ry="1.2" fill="#cc7722"/>
+                <path d="M-3 3 Q0 5.5 3 3" fill="none" stroke="#cc7722" stroke-width="0.8"/>
+                <path d="M-1.5 3 L-0.5 4.5 L0.5 4.5 L1.5 3" fill="#cc4422"/>
+                <line x1="6" y1="4" x2="13" y2="-4" stroke="#c0c0c0" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="5" y1="3.5" x2="6.5" y2="5" stroke="#8b7355" stroke-width="2" stroke-linecap="round"/>
+                <line x1="3.5" y1="2.5" x2="5" y2="3.5" stroke="#8b7355" stroke-width="1.5"/>
+                <path d="M7.5 3 L13 -4 L12 -5 L6.5 2 Z" fill="#e0e0e0" stroke="#c0c0c0" stroke-width="0.4"/>
+                <path d="M-8 9 Q-12 6 -14 10 Q-15 13 -12 11.5" fill="none" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="-5.5" y1="12" x2="-5.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="5.5" y1="12" x2="5.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="-2.5" y1="12" x2="-2.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="2.5" y1="12" x2="2.5" y2="16" stroke="#e8a317" stroke-width="1.8" stroke-linecap="round"/>
+            </g>
+        </svg>
+    </span>`;
+  }
+  else if (username === 'patrik') {
+    html += ` <span class="premium-star">⭐</span>`;
+  }
+  else if (username === 'mz') {
+    html += ` <span class="codm-badge">CODM</span>`;
+  }
+  else if (username === 'mamad') {
+    html += ` <span class="messi-badge">⚽</span>`;
+  }
+  else if (username === 'm.r') {
+    html += ` <span class="nba-badge">🏀</span>`;
+  }
+  else if (username === 'es') {
+    html += ` <span class="gold-star">⭐</span>`;
+  }
+  else if (username === 'samir') {
+    html += ` <span class="cr7-badge">CR7</span>`;
+  }
+  else if (badge && badge !== '') {
+    html += ` <span class="badge-wrapper"><span class="badge-ufc" style="background:${badgeColor};">${badge}</span></span>`;
+  }
+  
+  return html;
+}
+
+function renderProfile() {
+  var avatarEl = document.getElementById('profileAvatar');
+  var avatarText = document.getElementById('avatarText');
+  var avatarImg = document.getElementById('avatarImg');
+  var fullscreenImg = document.getElementById('avatarFullscreenImg');
+
+  var avatar = currentAvatar || localStorage.getItem('profile_avatar_' + currentUsername) || '';
+  
+  if (avatar && avatar !== '' && avatar !== 'null') {
+    avatarText.style.display = 'none';
+    avatarImg.style.display = 'block';
+    avatarImg.src = avatar;
+    fullscreenImg.src = avatar;
+    avatarEl.style.background = 'transparent';
+  } else {
+    avatarText.style.display = 'block';
+    avatarImg.style.display = 'none';
+    var initial = (currentDisplayName || currentUsername).charAt(0).toUpperCase();
+    avatarText.textContent = initial;
+    avatarEl.style.background = getGradient(currentUsername);
+  }
+
+  var displayName = currentDisplayName || currentUsername;
+  
+  var nameWrapper = document.getElementById('profileNameWrapper');
+  var nameSpan = document.getElementById('profileName');
+  nameSpan.textContent = displayName;
+  nameWrapper.innerHTML = '';
+  nameWrapper.appendChild(nameSpan);
+  nameWrapper.insertAdjacentHTML('beforeend', buildNameBadges());
+
+  document.getElementById('profileUsername').textContent = '@' + currentUsername;
+  document.getElementById('infoName').textContent = displayName;
+  document.getElementById('infoUsername').textContent = '@' + currentUsername;
+
+  var bioText = currentBio || 'No bio';
+  document.getElementById('infoBio').textContent = bioText;
+
+  var userId = currentUserId || '---';
+  document.getElementById('infoId').textContent = userId;
+
+  // ===== STATUS با داده واقعی =====
+  var statusEl = document.getElementById('profileStatus');
+  
+  // از localStorage یا داده‌های سرور استفاده کن
+  var isOnline = localStorage.getItem('is_online_' + currentUsername) === 'true';
+  
+  if (isOnline) {
+    statusEl.textContent = 'Online';
+    statusEl.className = 'profile-status online';
+  } else {
+    var lastSeen = localStorage.getItem('last_seen_' + currentUsername) || Date.now() - 3600000;
+    statusEl.textContent = 'last seen ' + formatLastSeen(parseInt(lastSeen));
+    statusEl.className = 'profile-status offline';
+  }
+}
+
+// ============================================================
+// فرمت آخرین بازدید
+// ============================================================
+
+function formatLastSeen(timestamp) {
+  var now = Date.now();
+  var diff = Math.floor((now - timestamp) / 1000);
+  
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + ' minutes ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' hours ago';
+  return new Date(timestamp).toLocaleString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+}
+
+// ============================================================
+// توابع کمکی
+// ============================================================
+
+function getGradient(username) {
+  var colors = [
+    'linear-gradient(135deg, #e57373, #c62828)',
+    'linear-gradient(135deg, #f06292, #ad1457)',
+    'linear-gradient(135deg, #ba68c8, #6a1b9a)',
+    'linear-gradient(135deg, #64b5f6, #0d47a1)',
+    'linear-gradient(135deg, #4db6ac, #004d40)',
+    'linear-gradient(135deg, #81c784, #1b5e20)',
+    'linear-gradient(135deg, #ffb74d, #e65100)',
+    'linear-gradient(135deg, #90a4ae, #263238)'
+  ];
+  var hash = 0;
+  for (var i = 0; i < username.length; i++) {
+    hash = username.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return colors[Math.abs(hash) % colors.length];
+}
+
+function showError(message) {
+  loadingState.style.display = 'none';
+  profileContent.style.display = 'none';
+  errorState.style.display = 'block';
+  errorText.textContent = message;
+}
+
+function showDynamicIsland(message) {
+  var island = document.getElementById('dynamicIsland');
+  var text = document.getElementById('islandText');
+  text.textContent = message;
+  island.classList.add('show');
+  clearTimeout(islandTimer);
+  islandTimer = setTimeout(function() {
+    island.classList.remove('show');
+  }, 2000);
+}
+
+// ============================================================
+// اکشن‌ها
+// ============================================================
+
+function editProfile() {
+  window.location.href = '/settings';
+}
+
+function copyInfo(type) {
+  var text = '';
+  switch(type) {
+    case 'name':
+      text = currentDisplayName || currentUsername;
+      break;
+    case 'username':
+      text = '@' + currentUsername;
+      break;
+    case 'bio':
+      text = currentBio || 'No bio';
+      break;
+    case 'id':
+      text = currentUserId || '---';
+      break;
+    default:
+      return;
+  }
+  
+  navigator.clipboard.writeText(text).then(function() {
+    showDynamicIsland('Copied: ' + text.substring(0, 30) + (text.length > 30 ? '...' : ''));
+  });
+}
+
+function openAvatarFullscreen() {
+  var img = document.getElementById('avatarImg');
+  if (img.style.display !== 'none' && img.src) {
+    document.getElementById('avatarFullscreenImg').src = img.src;
+    document.getElementById('avatarFullscreenOverlay').classList.add('active');
+  }
+}
+
+function closeAvatarFullscreen() {
+  document.getElementById('avatarFullscreenOverlay').classList.remove('active');
+}
+
+// ============================================================
+// دکمه بازگشت
+// ============================================================
+
+function goBack() {
+    try {
+        history.back();
+    } catch(e) {
+        window.location.href = '/rooms';
+    }
+}
+
+// ============================================================
+// ناوبری
+// ============================================================
+
+function goToRooms() {
+  window.location.href = '/rooms';
+}
+
+function goToProfile() {
+  window.location.href = '/profile';
+}
+
+function goToSettings() {
+  window.location.href = '/settings';
+}
+
+// ============================================================
+// اعمال تم
+// ============================================================
+
+(function() {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark-mode');
+  }
+})();
+
+window.addEventListener('storage', function(e) {
+  if (e.key === 'theme') {
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }
+});
+
+// ============================================================
+// اجرا
+// ============================================================
+
+getCurrentUser();
+</script>
+</body>
+</html>
